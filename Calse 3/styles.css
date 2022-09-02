@@ -1,0 +1,38 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+#juego{
+    width: 500px;
+    height: 200px;
+    border: 1px solid black;
+}
+#personaje{
+    width: 20px;
+    height: 50px;
+    background-color: blue;
+    position: relative;
+    top:  150px;
+}
+.animar{
+    animation: brinca 500ms;
+}
+@keyframes brinca {
+    0%{top: 150px;}
+    30%{top: 100px;}
+    70%{top: 100px;}
+    100%{top: 150px;}
+}
+#cosa{
+    width: 20px;
+    height: 20px;
+    background-color: brown;
+    position: relative;
+    top: 130px;
+    left: 480px;
+    animation: cosa 1s infinite linear;
+}
+@keyframes cosa{
+    0%{left: 480px;}
+    100%{left: -40px;}
+}
