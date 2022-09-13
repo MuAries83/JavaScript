@@ -16,5 +16,5 @@ var minusculas = apellido.toLocaleLowerCase();
     //filtrado de la informacion proporcionada por el usuario
     let respuesta = calseApellido.filter(item => item.apellido === minusculas);
     //salida de informacion en pantalla
-    respuesta.forEach(item => alert(item.nombre + item.apellido + item.materno));
+    respuesta.forEach(item => alert("El nombre complero del Alumno es " + item.nombre + " " + item.apellido + " " + item.materno));
 };
