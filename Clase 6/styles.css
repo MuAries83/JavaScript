@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.encabezado{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: cyan;
+    padding: 5px 5px 5px 5px;
+}
+.cuerpo{
+    display: flex;
+    background-color: beige;
+    align-content: center;
+    padding: 10px 10px 10px 10px;
+    justify-content: center;
+}
+.seleccion{
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.pie{
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.boton{
+    margin: 5px 5px 5px 5px;
+    align-content: center;
+    justify-content: center;
+
+}
+p{
+    padding: 15px 13px 7px 3px;
+}
