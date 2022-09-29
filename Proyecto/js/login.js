@@ -78,7 +78,7 @@ function entrar(){
 
     if (ucontra === contra){
         alert("Bienvenido a esta prueba");
-        window.location("index.html");
+        location.href = "../js/index.html"
     }else{ alert("No existe el usuario");
         document.getElementById("usuario").focus();
     }

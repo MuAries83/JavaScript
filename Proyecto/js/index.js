@@ -1,20 +1,40 @@
-// Se comienza con el arreglo para buscar los apellidos de los alumnos, consentrano nombres y apellidos que se pueden buscar en el HTML
-
-const calseApellido = [
-    {id: 1, apellido: "navarro", materno: "lopez", nombre: "marco"},
-    {id: 2, apellido: "moreno", materno: "moreno", nombre: "luisa"},
-    {id: 3, apellido: "mariscal", materno: "lomeli", nombre: "sara"},
-    {id: 4, apellido: "sandoval", materno: "vazquez", nombre: "ana"},
-    {id: 5, apellido: "chavez", materno: "romero", nombre: "luis"},
-    {id: 6, apellido: "salazar", materno: "nieves", nombre: "edgar"},
+//Creacion de variable para afectar el cuerpo del HTML
+let cuerpo = document.getElementById("cuerpo");
+//Arreglo para trabajo de HTML
+const lista = [
+    {id: 1, apellido: "navarro", nombre: "marco"},
+    {id: 2, apellido: "moreno", nombre: "luisa"},
+    {id: 3, apellido: "mariscal", nombre: "sara"},
+    {id: 4, apellido: "sandoval", nombre: "ana"},
+    {id: 5, apellido: "chavez", nombre: "luis"},
+    {id: 6, apellido: "salazar", nombre: "edgar"},
 ];
+//Metiendo el arreglo de los datos pre-existentes a Json
 
-//funciones y captura por parte del usuario
-function buscar(){
-let apellido = prompt("Ingrese el apellido a buscar");
-var minusculas = apellido.toLocaleLowerCase();
-    //filtrado de la informacion proporcionada por el usuario
-    let respuesta = calseApellido.filter(item => item.apellido === minusculas);
-    //salida de informacion en pantalla
-    respuesta.forEach(item => alert("El nombre complero del Alumno es " + item.nombre + " " + item.apellido + " " + item.materno));
+localStorage.setItem("base", JSON.stringify(lista));
+
+//captura por parte del usuario
+let apellido = prompt("Ingrese nuevo apellido").toLocaleLowerCase();
+let nombre = prompt("Ingrese el nombre").toLocaleLowerCase();
+
+// LLamando al JSON para utilizarlo
+let base = JSON.parse(localStorage.getItem("base"));
+
+//Impresion de datos en pantalla
+let obj = {
+    id: base.length + 1,
+    apellido: apellido,
+    nombre: nombre
 };
+
+lista.push(obj);
+
+for (const list of lista){
+    let div = document.createElement("div");
+    div.innerHTML = `
+    <h3>ID: ${list.id}</h3>
+    <p>Apellido: ${list.apellido}</p>
+    <b>Nombre: ${list.nombre}</b>
+    `;
+    cuerpo.append(div);
+}
