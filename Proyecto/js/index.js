@@ -27,14 +27,46 @@ let obj = {
     nombre: nombre
 };
 
-lista.push(obj);
+//lista.push(obj);
 
-for (const list of lista){
-    let div = document.createElement("div");
-    div.innerHTML = `
-    <h3>ID: ${list.id}</h3>
-    <p>Apellido: ${list.apellido}</p>
-    <b>Nombre: ${list.nombre}</b>
-    `;
-    cuerpo.append(div);
-}
+//for (const list of lista){
+//    let div = document.createElement("div");
+//    div.innerHTML = `
+//    <h3>ID: ${list.id}</h3>
+//    <p>Apellido: ${list.apellido}</p>
+//    <b>Nombre: ${list.nombre}</b>
+//    `;
+//    cuerpo.append(div);
+//};
+
+// Creacion de elementos dentro de la pagibna
+function formatosDatos () {
+    base.forEach((alumno) => {
+        let alumnos = `
+            <div class="master">
+                <div class="individual">
+                    <h3 class ="sub_titulo">Numero: ${alumno.id}</h3>
+                    <p> Primer Apellido: ${alumno.apellido} </p>
+                    <p> Nombre: ${alumno.nombre} </p>
+                    <button class="asistencia"> Asistencia </button>
+                    <button class="falta"> Falta </button>
+                </div>
+            </div>
+        `;
+    cuerpo.innerHTML += alumnos;
+    });
+};
+
+//function boton1 () {
+//    let boton = `
+//        <button class="boton"> Regresar </button>
+//    `;
+//    cuerpo.innerHTML += boton;
+//};
+//encabezado();
+formatosDatos();
+//boton1();
+
+
+
+

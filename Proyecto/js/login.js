@@ -76,10 +76,10 @@ function entrar(){
     var user = localStorage.getItem("user");
     var contra = localStorage.getItem("contra");
 
-    if (ucontra === contra){
+    if (ucontra === contra && usuraio === user){
         alert("Bienvenido a esta prueba");
-        location.href = "../js/index.html"
-    }else{ alert("No existe el usuario");
+        
+    }else{ alert("Error en el Usuario o la Contraseña");
         document.getElementById("usuario").focus();
     }
 }

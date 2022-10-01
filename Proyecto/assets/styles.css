@@ -140,7 +140,8 @@ main{
         position: relative;
     }
 }
-.encabezado{
+/*Constuccion del Index */
+/*.encabezado{
     display: flex;
     background-color: blue;
     align-content: center;
@@ -153,10 +154,41 @@ main{
     align-content: center;
     padding: 10px 10px 10px 10px;
     justify-content: center;
-}
-.boton{
-    padding-top: 20px;
+}*/
+.asistencia{
+    margin-top: 20px;
+    width: 100%;
+    max-width: 65px;
     display: flex;
     align-content: center;
     justify-content: center;
+    border-radius: 5px;
+    border-style: none;
+}
+.falta{
+    margin-top: 20px;
+    width: 100%;
+    max-width: 50px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border-radius: 5px;
+    border-style: none;
+}
+.master{
+    width: 100%;
+    max-width: 180px;
+    display: flex;
+    position: relative;
+    margin: 20px 40px;
+    background: #46a2fd;
+}
+.individual{
+    padding: 10px 15px;
+    width: 100%;
+    max-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-around;
 }
