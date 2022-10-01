@@ -9,26 +9,36 @@ const lista = [
     {id: 5, apellido: "chavez", nombre: "luis"},
     {id: 6, apellido: "salazar", nombre: "edgar"},
 ];
-//Metiendo el arreglo de los datos pre-existentes a Json
-
-localStorage.setItem("base", JSON.stringify(lista));
 
 //captura por parte del usuario
-let apellido = prompt("Ingrese nuevo apellido").toLocaleLowerCase();
-let nombre = prompt("Ingrese el nombre").toLocaleLowerCase();
+//let apellido = prompt("Ingrese nuevo apellido").toLocaleLowerCase();
+//let nombre = prompt("Ingrese el nombre").toLocaleLowerCase();
 
-// LLamando al JSON para utilizarlo
-let base = JSON.parse(localStorage.getItem("base"));
+
+
+const calif = [
+    {id: 1, calificacion: "80", estado: "Aprobado"},
+    {id: 2, calificacion: "60", estado: "Aprobado"},
+    {id: 3, calificacion: "50", estado: "No Aprobado"},
+    {id: 4, calificacion: "90", estado: "Aprobado"},
+    {id: 5, calificacion: "55", estado: "No Aprobado"},
+    {id: 6, calificacion: "75", estado: "Aprobado"},
+];
 
 //Impresion de datos en pantalla
-let obj = {
-    id: base.length + 1,
-    apellido: apellido,
-    nombre: nombre
-};
+//let obj = {
+//    id: base.length + 1,
+//    apellido: apellido,
+//    nombre: nombre
+//};
 
-//lista.push(obj);
+//Metiendo el arreglo de los datos pre-existentes a Json
+//localStorage.setItem("base", JSON.stringify(lista));
 
+// LLamando al JSON para utilizarlo
+//let base = JSON.parse(localStorage.getItem("base"));
+
+lista.push(...calif);
 //for (const list of lista){
 //    let div = document.createElement("div");
 //    div.innerHTML = `
@@ -41,13 +51,15 @@ let obj = {
 
 // Creacion de elementos dentro de la pagibna
 function formatosDatos () {
-    base.forEach((alumno) => {
+    lista.forEach((alumno) => {
         let alumnos = `
             <div class="master">
                 <div class="individual">
                     <h3 class ="sub_titulo">Numero: ${alumno.id}</h3>
                     <p> Primer Apellido: ${alumno.apellido} </p>
                     <p> Nombre: ${alumno.nombre} </p>
+                    <p> Calificacion: ${alumno.calificacion} </p>
+                    <p> Estado: ${alumno.estado} </p>
                     <button class="asistencia"> Asistencia </button>
                     <button class="falta"> Falta </button>
                 </div>
@@ -56,6 +68,7 @@ function formatosDatos () {
     cuerpo.innerHTML += alumnos;
     });
 };
+
 
 //function boton1 () {
 //    let boton = `
