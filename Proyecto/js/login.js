@@ -68,18 +68,38 @@ function registrarse(){
     let correo = localStorage.setItem("correo", document.getElementById("correo").value);
     let user = localStorage.setItem("user", document.getElementById("user").value);
     let contra = localStorage.setItem("contra", document.getElementById("contra").value);
+
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Tus datos han sido guardados',
+        showConfirmButton: false,
+        timer: 1500
+    })
 }
 
 function entrar(){
-    var usuraio = document.getElementById("usuario").value;
-    var ucontra = document.getElementById("contra1").value;
-    var user = localStorage.getItem("user");
-    var contra = localStorage.getItem("contra");
+    let usuraio = document.getElementById("usuario").value;
+    let ucontra = document.getElementById("contra1").value;
+    let user = localStorage.getItem("user");
+    let contra = localStorage.getItem("contra");
 
     if (ucontra === contra && usuraio === user){
-        alert("Bienvenido a esta prueba");
-        
-    }else{ alert("Error en el Usuario o la Contraseña");
-        document.getElementById("usuario").focus();
-    }
+        Swal.fire({
+            title: 'Sweet!',
+            text: 'Bienvenido volvamos a trabajar',
+            imageUrl: 'https://unsplash.it/400/200',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+        })
+    }else{ 
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Usuario o contraseña incorrecta',
+            footer: '<a href="">¿contactar con soporte?</a>',
+            timer: 3500,
+        });
+    };
 }

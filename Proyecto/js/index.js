@@ -33,12 +33,12 @@ const calif = [
 //};
 
 //Metiendo el arreglo de los datos pre-existentes a Json
-//localStorage.setItem("base", JSON.stringify(lista));
+localStorage.setItem("base", JSON.stringify(lista));
 
 // LLamando al JSON para utilizarlo
-//let base = JSON.parse(localStorage.getItem("base"));
+let base = JSON.parse(localStorage.getItem("base"));
 
-lista.push(...calif);
+base.push(...calif);
 //for (const list of lista){
 //    let div = document.createElement("div");
 //    div.innerHTML = `
@@ -51,7 +51,7 @@ lista.push(...calif);
 
 // Creacion de elementos dentro de la pagibna
 function formatosDatos () {
-    lista.forEach((alumno) => {
+    base.forEach((alumno) => {
         let alumnos = `
             <div class="master">
                 <div class="individual">
