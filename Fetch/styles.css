@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+    font-weight: 650;
+    text-decoration: none;
+}
+.usuarios{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    list-style: none;
+    padding: 0 40px;
+    margin-top: 40px;
+}
+.usuario {
+    margin-bottom: 40px;
+    background-color: #f4f4f4;
+    padding: 40px;
+}
+.nombre {
+    color: aquamarine;
+    font-weight: 800;
+}
+.correo {
+    color: blue;
+    font-size: 18px;
+    margin-top: 15px;
+}
+.tel {
+    color: #aaa; 
+    font-size: 14px; 
+    margin-top: 5px;
+}
