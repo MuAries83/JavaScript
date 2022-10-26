@@ -1,0 +1,61 @@
+/*Simpre se utiliza la aplicaion de margenes en 0 para poder utilizar la totalidad de la pantalla*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#pantalla{
+        border: 5px solid black;
+        width: 1280px;
+        height: 720px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        overflow: hidden;
+}
+canvas {
+    background: url(../assest/owlbear/background.png);
+}
+#overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*con la porpiedad de poniter-events podemos lograr que los elementos animados en otros segmentos no se vean opacados
+        o no se disparen a cuasa de que los elementos estan uno encima del otro*/
+    pointer-events: none;
+}
+#leaves_left{
+    position: absolute;
+    top: 50px;
+    left: -100px;
+    transition: 0.5s;
+    animation: viento ease-in-out 1.8s infinite;
+    pointer-events: none;
+}
+#leaves_right{
+    position: absolute;
+    top: 50px;
+    right: -150px;
+    transition: 0.3s;
+    animation: viento ease-in-out 2.4s infinite;
+    pointer-events: none;
+}
+/*con el elemento ~ se seleccionan todos los elementos hermanos dentro de la estructura del HTML*/
+canvas:hover ~ #leaves_left {
+    left: -125px;
+    transform: rotate(15deg);
+}
+canvas:hover ~ #leaves_right {
+    right: -160px;
+    transform: rotate(-15deg);
+}
+@keyframes viento{
+    0% {top: 50px;}
+    50% {top: 60px;}
+    100% {top: 50px;}
+}
+#osolechusa{
+    display: none;
+}
