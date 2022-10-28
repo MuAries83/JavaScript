@@ -90,6 +90,8 @@ window.addEventListener("load", function(){
             this.x = this.juego.width;
             this.movimientoX = Math.random() * -1.5 - 0.5;
             this.marcaEliminacio = false;
+            this.vidas = 5;
+            this.score = this.vidas;
         }
         update(){
             this.x += this.movimientoX;
@@ -98,6 +100,9 @@ window.addEventListener("load", function(){
         draw(context){
             context.fillStyle = "red";
             context.fillRect(this.x, this.y, this.width, this.height);
+            context.fillStyle = "black";
+            context.font = "20px Helvetica";
+            context.fillText(this.vidas, this.x, this.y);
         }
     }
     class Pez1 extends Enemigo {
@@ -156,6 +161,19 @@ window.addEventListener("load", function(){
             }
             this.enemigo.forEach(enemigo => {
                 enemigo.update();
+                if (this.checkCollision(this.jugador, enemigo)){
+                    enemigo.marcaEliminacio = true;
+                }
+                this.jugador.proyectiles.forEach(proyectiles => {
+                    if (this.checkCollision(proyectiles, enemigo)){
+                        enemigo.vidas --;
+                        proyectiles.marcaEliminacio = true;
+                        if (enemigo.vidas <= 0){
+                            enemigo.marcaEliminacio = true;
+                            this.score += enemigo.score;
+                        }
+                    }
+                    })
             });
             this.enemigo = this.enemigo.filter(enemigo => !enemigo.marcaEliminacio);
             if (this.tiempoEne > this.aparicion && !this.perdiste){
@@ -175,6 +193,12 @@ window.addEventListener("load", function(){
         nuevoEnemigo (){
             this.enemigo.push(new Pez1(this));
         };
+        checkCollision(rect1, rect2){
+            return (    rect1.x < rect2.x + rect2.width && 
+                        rect1.x + rect1.width > rect2.x &&
+                        rect1.y < rect2.y + rect2.height &&
+                        rect1.height + rect1.y > rect2.y)
+        }
     }
     const juego = new Juego(marco.width, marco.height);
     let momento = 0;
