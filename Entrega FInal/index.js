@@ -85,6 +85,30 @@ window.addEventListener("load", function(){
         }
     }
     class Enemigo {
+        constructor(juego){
+            this.juego = juego;
+            this.x = this.juego.width;
+            this.movimientoX = Math.random() * -1.5 - 0.5;
+            this.marcaEliminacio = false;
+        }
+        update(){
+            this.x += this.movimientoX;
+            if (this.x + this.width < 0) this.marcaEliminacio = true;
+        }
+        draw(context){
+            context.fillStyle = "red";
+            context.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+    class Pez1 extends Enemigo {
+        constructor(juego){
+            super(juego);
+            this.width = 228 * 0.2;
+            this.height = 169 * 0.2;
+            this.y = Math.random() * (this.juego.height * 0.9 - this.height);
+        }
+    }
+    class capa {
 
     }
     class Fondo {
@@ -113,10 +137,14 @@ window.addEventListener("load", function(){
             this.entrada = new ManejadorEntradas(this);
             this.ui = new Interfaz(this);
             this.keys = [];
+            this.enemigo = [];
+            this.tiempoEne = 0;
+            this.aparicion = 1000;
             this.municion = 20;
             this.municionMax = 50;
             this.recarga = 0;
             this.iterReca = 500;
+            this.perdiste = false;
         }
         update(timepodelta){
             this.jugador.update();
@@ -126,11 +154,27 @@ window.addEventListener("load", function(){
             } else {
                 this.recarga += timepodelta;
             }
+            this.enemigo.forEach(enemigo => {
+                enemigo.update();
+            });
+            this.enemigo = this.enemigo.filter(enemigo => !enemigo.marcaEliminacio);
+            if (this.tiempoEne > this.aparicion && !this.perdiste){
+                this.nuevoEnemigo();
+                this.tiempoEne = 0;
+            } else {
+                this.tiempoEne += timepodelta;
+            }
         }
         draw(context){
             this.jugador.draw(context);
             this.ui.draw(context);
+            this.enemigo.forEach(enemigo => {
+                enemigo.draw(context);
+            });
         }
+        nuevoEnemigo (){
+            this.enemigo.push(new Pez1(this));
+        };
     }
     const juego = new Juego(marco.width, marco.height);
     let momento = 0;
