@@ -140,6 +140,26 @@ window.addEventListener("load", function(){
             for (let i = 0; i < this.juego.municion; i++){
                 context.fillRect(20 + 5 * i, 50, 3, 20);
             }
+            // Contador de tiempo
+            const formatoTiempo = (this.juego.tiempoJue * 0.001).toFixed(1);
+            context.fillText("Tiempo " + formatoTiempo, 20, 100);
+            // condiciones de derrota
+            if (this.juego.perdiste){
+                context.textAling = "center";
+                let mensaje1;
+                let mensaje2;
+                if (this.juego.score > this.juego.victoria){
+                    mensaje1 = "Ganaste";
+                    mensaje2 = "Felicidades";
+                } else {
+                    mensaje1 = "Perdiste";
+                    mensaje2 = "Intentalo nuevamente";
+                }
+                context.font = "50px" + this.fontFamily;
+                context.fillText(mensaje1, this.juego.width * 0.5, this.juego.height * 0.5);
+                context.font = "25px" + this.fontFamily;
+                context.fillText(mensaje2, this.juego.width * 0.5, this.juego.height * 0.5- 40);
+            }
             context.restore();
         }
     }
@@ -161,8 +181,12 @@ window.addEventListener("load", function(){
             this.perdiste = false;
             this.score = 0;
             this.victoria = 10;
+            this.tiempoJue = 0;
+            this.limiteTie = 15000;
         }
         update(timepodelta){
+            if (!this.perdiste) this.tiempoJue += timepodelta;
+            if (this.tiempoJue > this.limiteTie) this.perdiste = true;
             this.jugador.update();
             if (this.recarga > this.iterReca){
                 if(this.municion < this.municionMax) this.municion ++;
@@ -181,7 +205,7 @@ window.addEventListener("load", function(){
                         proyectiles.marcaEliminacio = true;
                         if (enemigo.vidas <= 0){
                             enemigo.marcaEliminacio = true;
-                            this.score += enemigo.score;
+                            if (!this.juego.perdiste) this.score += enemigo.score;
                             if (this.score > this.victoria) this.perdiste =true;
                         }
                     }
