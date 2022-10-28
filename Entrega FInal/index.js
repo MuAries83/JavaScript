@@ -91,7 +91,19 @@ window.addEventListener("load", function(){
 
     }
     class Interfaz {
-
+        constructor(juego){
+            this.juego = juego;
+            this.fontSize = 25;
+            this.fontFamily = "Helvetica";
+            this.color = "white";
+        }
+        draw(context){
+            //Municion
+            context.fillStyle = this.color;
+            for (let i = 0; i < this.juego.municion; i++){
+                context.fillRect(20 + 5 * i, 50, 3, 20);
+            }
+        }
     }
     class Juego {
         constructor(width, height){
@@ -99,6 +111,7 @@ window.addEventListener("load", function(){
             this.height = height;
             this.jugador = new Jugador(this);
             this.entrada = new ManejadorEntradas(this);
+            this.ui = new Interfaz(this);
             this.keys = [];
             this.municion = 20;
             this.municionMax = 50;
@@ -116,6 +129,7 @@ window.addEventListener("load", function(){
         }
         draw(context){
             this.jugador.draw(context);
+            this.ui.draw(context);
         }
     }
     const juego = new Juego(marco.width, marco.height);
