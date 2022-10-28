@@ -127,11 +127,20 @@ window.addEventListener("load", function(){
             this.color = "white";
         }
         draw(context){
+            context.save();
+            context.fillStyle = this.color;
+            context.shadowOffsetX = 2;
+            context.shadowOffsetY = 2;
+            context.shadowColor = "black";
+            context.font = this.fontSize + "px" + this.fontFamily;
+            // Puntaje
+            context.fillText("Puntaje" + this.juego.score, 20, 40);
             //Municion
             context.fillStyle = this.color;
             for (let i = 0; i < this.juego.municion; i++){
                 context.fillRect(20 + 5 * i, 50, 3, 20);
             }
+            context.restore();
         }
     }
     class Juego {
@@ -150,6 +159,8 @@ window.addEventListener("load", function(){
             this.recarga = 0;
             this.iterReca = 500;
             this.perdiste = false;
+            this.score = 0;
+            this.victoria = 10;
         }
         update(timepodelta){
             this.jugador.update();
@@ -171,6 +182,7 @@ window.addEventListener("load", function(){
                         if (enemigo.vidas <= 0){
                             enemigo.marcaEliminacio = true;
                             this.score += enemigo.score;
+                            if (this.score > this.victoria) this.perdiste =true;
                         }
                     }
                     })
