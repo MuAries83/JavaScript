@@ -55,9 +55,13 @@ window.addEventListener("load", function(){
             this.height = 190;
             this.x = 20;
             this.y = 100;
+            this.frameX = 0;
+            this.frameY = 0;
+            this.maxFrame = 37;
             this.movimientoY = 0;
             this.velMaxima = 2;
             this.proyectiles = [];
+            this.image = document.getElementById("jugador");
         }
         update(){
             if(this.juego.keys.includes("ArrowUp")) this.movimientoY = -this.velMaxima;
@@ -69,10 +73,16 @@ window.addEventListener("load", function(){
                 proyectiles.update();
             });
             this.proyectiles = this.proyectiles.filter(proyectiles => !proyectiles.marcaEliminacio);
+            // Animacion del Sprite
+            if (this.frameX < this.maxFrame){
+                this.frameX++;
+            } else {
+                this.frameX = 0;
+            }
         }
         draw(context){
-            context.fillStyle = "black";
-            context.fillRect(this.x, this.y, this.width, this.height);
+            context.strokeRect(this.x, this.y, this.width, this.height);
+            context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
             this.proyectiles.forEach(proyectiles =>{
                 proyectiles.draw(context);
             });
@@ -113,11 +123,44 @@ window.addEventListener("load", function(){
             this.y = Math.random() * (this.juego.height * 0.9 - this.height);
         }
     }
-    class capa {
-
+    class Layer {
+        constructor(juego, image, speedModifier) {
+            this.juego = juego;
+            this.image = image;
+            this.speedModifier = speedModifier;
+            this.width = 1768;
+            this.height = 500;
+            this.x = 0;
+            this.y = 0;
+        }
+        update(){
+            if (this.x <= -this.width) this.x = 0;
+            this.x -= this.juego.speed * this.speedModifier;
+        }
+        draw(context){
+            context.drawImage(this.image, this.x, this.y);
+            context.drawImage(this.image, this.x + this.width, this.y);
+        }
     }
     class Fondo {
-
+        constructor(juego){
+            this.juego = juego;
+            this.image1 = document.getElementById("ambiente1");
+            this.image2 = document.getElementById("ambiente2");
+            this.image3 = document.getElementById("ambiente3");
+            this.image4 = document.getElementById("ambiente4");
+            this.layer1 = new Layer(this.juego, this.image1, 0.2);
+            this.layer2 = new Layer(this.juego, this.image2, 0.4);
+            this.layer3 = new Layer(this.juego, this.image3, 1);
+            this.layer4 = new Layer(this.juego, this.image4, 1.5);
+            this.layers = [this.layer1, this.layer2, this.layer3];
+        }
+        update(){
+            this.layers.forEach(layer => layer.update());
+        }
+        draw(context){
+            this.layers.forEach(layer => layer.draw(context));
+        }
     }
     class Interfaz {
         constructor(juego){
@@ -170,6 +213,7 @@ window.addEventListener("load", function(){
             this.jugador = new Jugador(this);
             this.entrada = new ManejadorEntradas(this);
             this.ui = new Interfaz(this);
+            this.fondo = new Fondo(this);
             this.keys = [];
             this.enemigo = [];
             this.tiempoEne = 0;
@@ -183,10 +227,13 @@ window.addEventListener("load", function(){
             this.victoria = 10;
             this.tiempoJue = 0;
             this.limiteTie = 15000;
+            this.speed = 1;
         }
         update(timepodelta){
             if (!this.perdiste) this.tiempoJue += timepodelta;
             if (this.tiempoJue > this.limiteTie) this.perdiste = true;
+            this.fondo.update();
+            this.fondo.layer4.update();
             this.jugador.update();
             if (this.recarga > this.iterReca){
                 if(this.municion < this.municionMax) this.municion ++;
@@ -205,7 +252,7 @@ window.addEventListener("load", function(){
                         proyectiles.marcaEliminacio = true;
                         if (enemigo.vidas <= 0){
                             enemigo.marcaEliminacio = true;
-                            if (!this.juego.perdiste) this.score += enemigo.score;
+                            if (!this.perdiste) this.score += enemigo.score;
                             if (this.score > this.victoria) this.perdiste =true;
                         }
                     }
@@ -220,11 +267,13 @@ window.addEventListener("load", function(){
             }
         }
         draw(context){
+            this.fondo.draw(context);
             this.jugador.draw(context);
             this.ui.draw(context);
             this.enemigo.forEach(enemigo => {
                 enemigo.draw(context);
             });
+            this.fondo.layer4.draw(context);
         }
         nuevoEnemigo (){
             this.enemigo.push(new Pez1(this));

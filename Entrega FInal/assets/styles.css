@@ -12,3 +12,7 @@
     background: #4d79bc;
     overflow: hidden;
 }
+
+#ambiente1, #ambiente2, #ambiente3, #ambiente4, #jugador {
+    display: none;
+}
