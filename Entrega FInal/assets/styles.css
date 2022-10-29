@@ -13,6 +13,6 @@
     overflow: hidden;
 }
 
-#ambiente1, #ambiente2, #ambiente3, #ambiente4, #jugador {
+#ambiente1, #ambiente2, #ambiente3, #ambiente4, #jugador, #angler1, #angler2, #lucky {
     display: none;
 }

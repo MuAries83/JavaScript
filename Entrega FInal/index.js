@@ -2,7 +2,7 @@ window.addEventListener("load", function(){
     //Propiedades el marco
     const marco = this.document.getElementById("marco 1");
     const ctx = marco.getContext("2d");
-    marco.width = 500;
+    marco.width = 900;
     marco.height = 500;
 
     class ManejadorEntradas {
@@ -15,6 +15,8 @@ window.addEventListener("load", function(){
                     this.juego.keys.push(e.key);
                 } else if (e.key === " "){
                     this.juego.jugador.shootTop();
+                } else if (e.key === "d"){
+                    this.juego.debug = !this.juego.debug;
                 }
             });
             window.addEventListener("keyup", e => {
@@ -81,7 +83,7 @@ window.addEventListener("load", function(){
             }
         }
         draw(context){
-            context.strokeRect(this.x, this.y, this.width, this.height);
+            if (this.juego.debug) context.strokeRect(this.x, this.y, this.width, this.height);
             context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
             this.proyectiles.forEach(proyectiles =>{
                 proyectiles.draw(context);
@@ -102,25 +104,33 @@ window.addEventListener("load", function(){
             this.marcaEliminacio = false;
             this.vidas = 5;
             this.score = this.vidas;
+            this.frameX = 0;
+            this.frameY = 0;
+            this.maxFrame = 37;
         }
         update(){
-            this.x += this.movimientoX;
+            this.x += this.movimientoX - this.juego.speed;
             if (this.x + this.width < 0) this.marcaEliminacio = true;
+            //Animacion enemiga
+            if (this.frameX < this.maxFrame){
+                this.frameX++;
+            } else this.frameX = 0;
         }
         draw(context){
-            context.fillStyle = "red";
-            context.fillRect(this.x, this.y, this.width, this.height);
-            context.fillStyle = "black";
+            if(this.juego.debug) context.strokeRect(this.x, this.y, this.width, this.height);
+            context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
             context.font = "20px Helvetica";
             context.fillText(this.vidas, this.x, this.y);
         }
     }
-    class Pez1 extends Enemigo {
+    class Angler1 extends Enemigo {
         constructor(juego){
             super(juego);
-            this.width = 228 * 0.2;
-            this.height = 169 * 0.2;
+            this.width = 228;
+            this.height = 169;
             this.y = Math.random() * (this.juego.height * 0.9 - this.height);
+            this.image = document.getElementById("angler1");
+            this.frameY = Math.floor(Math.random() *3);
         }
     }
     class Layer {
@@ -228,6 +238,7 @@ window.addEventListener("load", function(){
             this.tiempoJue = 0;
             this.limiteTie = 15000;
             this.speed = 1;
+            this.debug = true;
         }
         update(timepodelta){
             if (!this.perdiste) this.tiempoJue += timepodelta;
@@ -276,7 +287,7 @@ window.addEventListener("load", function(){
             this.fondo.layer4.draw(context);
         }
         nuevoEnemigo (){
-            this.enemigo.push(new Pez1(this));
+            this.enemigo.push(new Angler1(this));
         };
         checkCollision(rect1, rect2){
             return (    rect1.x < rect2.x + rect2.width && 
